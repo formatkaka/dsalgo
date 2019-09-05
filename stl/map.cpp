@@ -26,7 +26,8 @@ int main(){
 
     map<char, int>::iterator itr;
 
-    itr = mymap.find('e');
+    itr = mymap.find('z');
+    cout << "itr : " << itr->first << endl;
     print_map(mymap);
 
     return 0;
