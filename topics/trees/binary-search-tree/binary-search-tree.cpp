@@ -8,8 +8,9 @@ int main(){
     BST<int> b;
 
     b.create();
-    b.InOrderTraversal();
-    b.Search();
+//    b.InOrderTraversal();
+//    b.Search();
+    cout << "sum is : " << b.RangeSum(3, 10);
 //    b.Insert();
 //    b.InOrderTraversal();
 }
