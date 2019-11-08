@@ -37,17 +37,17 @@ void dfs(vector<vector<int>>& G){
 
     dfsStack.push(1);
     visitedVertexes[1] = 1;
-    cout << "dfs : 1," ;
+    cout << "dfs : " ;
 
     while(!dfsStack.empty()){
 
         int parentIndex = dfsStack.top();
         dfsStack.pop();
+        cout << parentIndex << ',';
 
-        for (int i = 1; i < G[parentIndex].size(); ++i) {
+        for (int i = G[parentIndex].size() - 1; i >= 1; --i) {
 
             if(G[parentIndex][i] == 1 && !visitedVertexes[i]){
-                cout << i << ',';
                 dfsStack.push(i);
                 visitedVertexes[i] = 1;
             }
@@ -65,15 +65,15 @@ void bfs(vector<vector<int>>& G){
     vector<int> visitedVertexes(G.size(), 0);
     bfsQueue.push(1);
     visitedVertexes[1] = 1;
-    cout << "bfs : 1," ;
+    cout << "bfs : " ;
     while(!bfsQueue.empty()){
 
-        int parentIndex = bfsQueue.back();
+        int parentIndex = bfsQueue.front();
         bfsQueue.pop();
+        cout << parentIndex  << ',';
         for (int i = 1; i < G[parentIndex].size(); ++i) {
 
             if(G[parentIndex][i] == 1 && !visitedVertexes[i]){
-                cout << i << ',';
                 bfsQueue.push(i);
                 visitedVertexes[i] = 1;
             }
@@ -97,6 +97,7 @@ int main(){
                              {0,0,0,0,1,0,0}};
     bfs(G);
     dfs(G);
+    cout << "dfs recursive : ";
     dfsRecursive(G,1);
 
     return 0;

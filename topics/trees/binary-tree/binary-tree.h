@@ -44,6 +44,8 @@ public:
 
     void PreOrderTraversal(NodeB<T> *r);
 
+    string serialize();
+
     int TreeHeight() { return TreeHeight(root); };
 
     int TreeHeight(NodeB<T> *r);
@@ -155,6 +157,50 @@ int BinaryTree<T>::CountLeafNodes(NodeB<T> *r) {
     int y = CountLeafNodes(r->rchild);
 
     return x + y +(!r->rchild && !r->lchild ? 1 : 0);
+}
+
+template<class T>
+string BinaryTree<T>::serialize(){
+    queue<NodeB<T>*> q;
+
+        q.push(root);
+
+        string serializedString = "[";
+
+        while(!q.empty()){
+
+            NodeB<T>* temp = q.front();
+            q.pop();
+
+            string val = temp->data ? to_string(temp->data) + ',' : "null,";
+
+            serializedString = serializedString + val;
+
+            if(temp->data == INT_MAX){
+                continue;
+            }
+
+            if(temp->lchild){
+                q.push(temp->lchild);
+            }else{
+                NodeB<T>* templeft;
+                 templeft->data = INT_MAX;
+                q.push(templeft);
+            }
+
+            if(temp->rchild){
+                q.push(temp->rchild);
+            }else{
+                NodeB<T>* tempright;
+                 tempright->data = INT_MAX;
+                q.push(tempright);
+            }
+
+        }
+
+        serializedString += ']';
+        cout << "string : " << serializedString ;
+        return serializedString;
 }
 
 #endif //DSALGO_BINARY_TREE_H
