@@ -44,49 +44,34 @@ int minCoins = INT_MAX;
 int found = false;
 
 
+void coinChange(vector<int> &coins, int amount) {
 
-void coinChange(vector<int>& coins, int amount, int numOfCoins){
+    vector<int> v(amount + 1, INT_MAX);
+    int numOfCoins = coins.size();
+    v[0] = 0;
+    for (int i = 0; i <= amount; ++i) {
+        for (int j = 0; j < numOfCoins; ++j) {
 
-    static vector<int> mem(amount+1, amount+1);
+            if (i - coins[j] >= 0) {
+                v[i] = min(v[i], 1 + v[i - coins[j]]);
+            }
 
-    if(mem[amount] < amount+1){
-        return;
-    }
-
-    if(amount == 0){
-        found = true;
-        minCoins = min(numOfCoins, minCoins);
-        return;
-    }
-
-    if(coins.empty()){
-        return;
-    }
-
-    vector<int> newCoins(coins.begin(), coins.end()-1);
-    int maxFactor = (amount / coins[coins.size()-1]);
-
-    for (int i = 0; i <= maxFactor; ++i) {
-        int z = numOfCoins+i;
-        int y = amount - (coins[coins.size()-1]*i);
-
-        if(y == 0){
-            mem[amount] = min(mem[amount], z);
         }
 
-        coinChange(newCoins, y, z);
     }
+
+    cout << "min amount is : " << v[amount];
 
 }
 
-int main(){
+int main() {
 
-    vector<int> coins = {1,2,5};
+    vector<int> coins = {1, 2, 5};
     int amount = 11;
 //    vector<int> coins = {};
 //    int amount = 3;
-    coinChange(coins, amount, 0);
-    int result = found?minCoins:-1;
-    cout << "min coins required : " << result;
+    coinChange(coins, amount);
+//    int result = found?minCoins:-1;
+//    cout << "min coins required : " << result;
     return 0;
 }
