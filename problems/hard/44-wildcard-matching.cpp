@@ -176,7 +176,7 @@ bool isMatch(string s, string p) {
 int main() {
 
     string s = "adeceb";
-    string p = "*eb";
+    string p = "a*eb";
     isMatch(s, p);
     cout << "done : " << done;
     return 0;
