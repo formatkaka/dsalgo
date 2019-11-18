@@ -81,10 +81,65 @@ int longestCommonSubsequence_rec(string &text1, string &text2, int index1, int i
 
 }
 
+
+int lcsOld(string &text1, string &text2, int index1, int index2, int count, vector<vector<int>> &dp) {
+
+    if (index1 < 0 || index2 < 0) {
+        return count;
+    }
+
+    if (dp[index1][index2] != -1) {
+        return dp[index1][index2];
+    }
+
+    dp[index1][index2] = 0;
+
+    int len = count;
+    if (text1[index1] == text2[index2]) {
+        len = lcsOld(text1, text2, index1 - 1, index2 - 1, count + 1, dp);
+        dp[index1][index2] = len;
+        return len;
+    } else {
+        int len2 = lcsOld(text1, text2, index1 - 1, index2, count, dp);
+        int len3 = lcsOld(text1, text2, index1, index2 - 1, count, dp);
+        dp[index1][index2] = max(len2,len3);
+        return dp[index1][index2];
+    }
+
+
+    return -1;
+
+}
+
+int lcs(string& text1, string& text2, int i, int j, vector<vector<int>> &dp){
+
+    if(i < 0 || j < 0){
+        return 0;
+    }
+
+    if(dp[i][j] != -1){
+        return dp[i][j];
+    }
+
+    if(text1[i] == text2[j]){
+        return dp[i][j] = 1 + lcs(text1, text2, i-1, j-1, dp);
+    }
+
+    int m = max(lcs(text1, text2, i-1, j, dp), lcs(text1, text2, i, j-1, dp));
+    dp[i][j] = m;
+    return m;
+
+}
+
 int main() {
 
     string s1 = "fcvafurqjylclorwfoladwfqzkbebslwnmpmlkbezkxoncvwhstwzwpqxqtyxozkpgtgtsjobujezgrkvevklmludgtyrmjaxyputqbyxqvupojutsjwlwluzsbmvyxifqtglwvcnkfsfglwjwrmtyxmdgjifyjwrsnenuvsdedsbqdovwzsdghclcdexmtsbexwrszihcpibwpidixmpmxshwzmjgtadmtkxqfkrsdqjcrmxkbkfoncrcvoxuvcdytajgfwrcxivixanuzerebuzklyhezevonqdsrkzetsrgfgxibqpmfuxcrinetyzkvudghgrytsvwzkjulmhanankxqfihenuhmfsfkfepibkjmzybmlkzozmluvybyzsleludsxkpinizoraxonmhwtkfkhudizepyzijafqlepcbihofepmjqtgrsxorunshgpazovuhktatmlcfklafivivefyfubunszyvarcrkpsnglkduzaxqrerkvcnmrurkhkpargvcxefovwtapedaluhclmzynebczodwropwdenqxmrutuhehadyfspcpuxyzodifqdqzgbwhodcjonypyjwbwxepcpujerkrelunstebopkncdazexsbezmhynizsvarafwfmnclerafejgnizcbsrcvcnwrolofyzulcxaxqjqzunedidulspslebifinqrchyvapkzmzwbwjgbyrqhqpolwjijmzyduzerqnadapudmrazmzadstozytonuzarizszubkzkhenaxivytmjqjgvgzwpgxefatetoncjgjsdilmvgtgpgbibexwnexstipkjylalqnupexytkradwxmlmhsnmzuxcdkfkxyfgrmfqtajatgjctenqhkvyrgvapctqtyrufcdobibizihuhsrsterozotytubefutaxcjarknynetipehoduxyjstufwvkvwvwnuletybmrczgtmxctuny";
     string s2 = "nohgdazargvalupetizezqpklktojqtqdivcpsfgjopaxwbkvujilqbclehulatshehmjqhyfkpcfwxovajkvankjkvevgdovazmbgtqfwvejczsnmbchkdibstklkxarwjqbqxwvixavkhylqvghqpifijohudenozotejoxavkfkzcdqnoxydynavwdylwhatslyrwlejwdwrmpevmtwpahatwlaxmjmdgrebmfyngdcbmbgjcvqpcbadujkxaxujudmbejcrevuvcdobolcbstifedcvmngnqhudixgzktcdqngxmruhcxqxypwhahobudelivgvynefkjqdyvalmvudcdivmhghqrelurodwdsvuzmjixgdexonwjczghalsjopixsrwjixuzmjgxydqnipelgrivkzkxgjchibgnqbknstspujwdydszohqjsfuzstyjgnwhsrebmlwzkzijgnmnczmrehspihspyfedabotwvwxwpspypctizyhcxypqzctwlspszonsrmnyvmhsvqtkbyhmhwjmvazaviruzqxmbczaxmtqjexmdudypovkjklynktahupanujylylgrajozobsbwpwtohkfsxeverqxylwdwtojoxydepybavwhgdehafurqtcxqhuhkdwxkdojipolctcvcrsvczcxedglgrejerqdgrsvsxgjodajatsnixutihwpivihadqdotsvyrkxehodybapwlsjexixgponcxifijchejoxgxebmbclczqvkfuzgxsbshqvgfcraxytaxeviryhexmvqjybizivyjanwxmpojgxgbyhcruvqpafwjslkbohqlknkdqjixsfsdurgbsvclmrcrcnulinqvcdqhcvwdaxgvafwravunurqvizqtozuxinytafopmhchmxsxgfanetmdcjalmrolejidylkjktunqhkxchyjmpkvsfgnybsjedmzkrkhwryzan";
-    cout << longestCommonSubsequence_rec(s1, s2, 0, 0);
+//    cout << longestCommonSubsequence_rec(s1, s2, 0, 0);
+//    string s1 = "aebkc";
+//    string s2 = "abc";
+    vector<vector<int>> dp(s1.length(), vector<int>(s2.length(), -1));
+    cout << lcs(s1, s2, s1.length() - 1, s2.length() - 1,  dp);
+    cout << dp[s1.length() - 1][s2.length() - 1];
     return 0;
 }
