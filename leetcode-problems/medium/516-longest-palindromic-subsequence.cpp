@@ -2,6 +2,24 @@
 // Created by Siddhant on 2019-11-23.
 //
 
+/*
+ *
+ * Filling the table without understanding the underlying recurrence is kinda pointless.
+
+    The problem is solved as follows:
+
+    Let T(i,j) be the longest palindromic subsequence from i to j. We have to find the value of T(1,n).
+
+    Now some base cases: When i = j, the maximum length is one (since only one letter). That's how all the diagonal elements are one. Now, if a[i] = a[j], then one letter matches and we can recurse inwards. If neither of them match, then we can either move the index i by 1 or j by 1, and find the maximum of it.
+
+    Thus, recursively it can be written as:
+
+    T(i,j) = 1 if i = j
+             =  2 + T(i+1,j-1) if  i < j and a[i] = a[j]
+             =  max(T(i+1,j), T(i,j-1) in all other cases.
+ *
+ */
+
 #include "iostream"
 #include "vector"
 #include "string"
