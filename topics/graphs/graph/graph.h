@@ -153,6 +153,10 @@ public:
 
     }
 
+    bool detectCycle(){
+
+    }
+
 };
 
 
