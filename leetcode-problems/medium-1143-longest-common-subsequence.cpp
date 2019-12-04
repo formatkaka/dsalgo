@@ -113,7 +113,7 @@ int lcsOld(string &text1, string &text2, int index1, int index2, int count, vect
 
 int lcs(string& text1, string& text2, int i, int j, vector<vector<int>> &dp){
 
-    if(i < 0 || j < 0){
+    if(i > text1.length()-1 || j > text2.length()-1){
         return 0;
     }
 
@@ -122,10 +122,10 @@ int lcs(string& text1, string& text2, int i, int j, vector<vector<int>> &dp){
     }
 
     if(text1[i] == text2[j]){
-        return dp[i][j] = 1 + lcs(text1, text2, i-1, j-1, dp);
+        return dp[i][j] = 1 + lcs(text1, text2, i+1, j+1, dp);
     }
 
-    int m = max(lcs(text1, text2, i-1, j, dp), lcs(text1, text2, i, j-1, dp));
+    int m = max(lcs(text1, text2, i+1, j, dp), lcs(text1, text2, i, j+1, dp));
     dp[i][j] = m;
     return m;
 
@@ -139,7 +139,9 @@ int main() {
 //    string s1 = "aebkc";
 //    string s2 = "abc";
     vector<vector<int>> dp(s1.length(), vector<int>(s2.length(), -1));
-    cout << lcs(s1, s2, s1.length() - 1, s2.length() - 1,  dp);
-    cout << dp[s1.length() - 1][s2.length() - 1];
+//    cout << lcs(s1, s2, s1.length() - 1, s2.length() - 1,  dp);
+    cout << lcs(s1, s2, 0, 0,  dp);
+//    cout << dp[s1.length() - 1][s2.length() - 1];
+//    cout << dp[0][0];
     return 0;
 }
